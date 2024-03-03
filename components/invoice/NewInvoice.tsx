@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,13 +13,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { openNewInvoiceModal } from "@/store/model";
 const NewInvoice = () => {
+  const { setOpen, open } = openNewInvoiceModal();
   return (
     <div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">Share</Button>
-        </DialogTrigger>
+      <Dialog
+        open={open}
+        onOpenChange={(open) => {
+          setOpen(open);
+        }}
+      >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Share link</DialogTitle>

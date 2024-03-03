@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { User, columns } from "@/components/columns";
 import DataTable from "@/components/invoice/Table";
@@ -10,12 +8,12 @@ async function getUsers(): Promise<User[]> {
   const data = await res.json();
   return data;
 }
-const Invoice = async () => {
-  const data = await getUsers();
+const Invoice = () => {
+  // const data = await getUsers();
 
   return (
     <div className="mt-10">
-      <DataTable columns={columns} data={data} />
+      {/* <DataTable columns={columns} data={data} /> */}
     </div>
   );
 };

@@ -5,8 +5,13 @@ import NewInvoice from "@/components/invoice/NewInvoice";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { FiPlus } from "react-icons/fi";
+import { openNewInvoiceModal } from "@/store/model";
 
 const page = () => {
+  const { setOpen } = openNewInvoiceModal();
+
+  console.log("open", open);
+
   return (
     <div>
       <div className="flex justify-between items-center mt-3">
@@ -17,12 +22,13 @@ const page = () => {
           color="primary"
           // size={"lg"}
           onClick={() => {
-            <NewInvoice />;
+            setOpen(true);
           }}
         >
           <FiPlus className="text-lg" />
           <span>New Invoice</span>
         </Button>
+        <NewInvoice />
       </div>
 
       <Invoice />
