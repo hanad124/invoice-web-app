@@ -7,6 +7,11 @@ generator client {
   provider        = "prisma-client-js"
 }
 
+enum Status {
+  PAID
+  PENDING
+}
+
 model User {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   name   String
@@ -14,8 +19,53 @@ model User {
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  invoices Invoice[]
 }
 
+model Invoice {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id    String
+  client_name String
+  description  String?
+  total      Float
+  status      Status      @default(PENDING)
+  invoiceDate DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  items Item[]
+}
+
+model Item {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  invoice_id String
+  name       String
+  quantity   Int
+  price      Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  invoice Invoice @relation(fields: [invoice_id], references: [id], onDelete: Cascade)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================= prisma schema  =============================
 // model User {
 //  id             String    @id @default(auto()) @map("_id") @db.ObjectId
 //   name           String?

@@ -24,33 +24,31 @@ const NewInvoice = () => {
           setOpen(open);
         }}
       >
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Share link</DialogTitle>
+            <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
-              Anyone who has this link will be able to view this.
+              Make changes to your profile here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex items-center space-x-2">
-            <div className="grid flex-1 gap-2">
-              <Label htmlFor="link" className="sr-only">
-                Link
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
               </Label>
-              <Input
-                id="link"
-                defaultValue="https://ui.shadcn.com/docs/installation"
-                readOnly
-              />
+              <Input id="name" value="Pedro Duarte" className="col-span-3" />
             </div>
-            <Button type="submit" size="sm" className="px-3">
-              <span className="sr-only">Copy</span>
-              {/* <CopyIcon className="h-4 w-4" /> */}
-            </Button>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Username
+              </Label>
+              <Input id="username" value="@peduarte" className="col-span-3" />
+            </div>
           </div>
-          <DialogFooter className="sm:justify-start">
+          <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                Close
+              <Button variant="default" color="primary">
+                Save
               </Button>
             </DialogClose>
           </DialogFooter>

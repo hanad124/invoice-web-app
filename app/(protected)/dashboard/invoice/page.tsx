@@ -10,8 +10,6 @@ import { openNewInvoiceModal } from "@/store/model";
 const page = () => {
   const { setOpen } = openNewInvoiceModal();
 
-  console.log("open", open);
-
   return (
     <div>
       <div className="flex justify-between items-center mt-3">
@@ -28,8 +26,8 @@ const page = () => {
           <FiPlus className="text-lg" />
           <span>New Invoice</span>
         </Button>
-        <NewInvoice />
       </div>
+      <NewInvoice />
 
       <Invoice />
     </div>
