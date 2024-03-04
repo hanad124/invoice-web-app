@@ -63,8 +63,6 @@ const RegisterPgae = () => {
     }
   };
   return (
-  
-
     <div className="flex flex-col h-screen justify-center items-center">
       <div
         className=" bg-white w-full mx-4 md:max-0  px-7 py-10 md:w-[23rem] rounded-lg"
@@ -172,7 +170,7 @@ rgba(0, 0, 0, 0.06) 0px 0px 0px 1px`,
             </Button>
           </form>
         </Form>
-        <p className="mt-3 text-center text-base space-x-2 text-[#5d596c]">
+        <p className="mt-3 text-center text-sm space-x-1 text-[#5d596c]">
           <span>Already have an account?</span>
           <Link className="text-[#5d596c]" href={"/auth/login"}>
             Login

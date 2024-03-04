@@ -165,7 +165,7 @@ rgba(0, 0, 0, 0.06) 0px 0px 0px 1px`,
             </Button>
           </form>
         </Form>
-        <p className="mt-3 text-center text-base space-x-2 text-[#5d596c]">
+        <p className="mt-3 text-center text-sm space-x-1 text-[#5d596c]">
           <span>I don't have an account?</span>
           <Link className="text-[#5d596c]" href={"/auth/register"}>
             Register

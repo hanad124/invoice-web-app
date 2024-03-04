@@ -8,8 +8,8 @@ generator client {
 }
 
 enum Status {
-  PAID
-  PENDING
+  pending
+  paid
 }
 
 model User {
@@ -25,12 +25,12 @@ model User {
 
 model Invoice {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  user_id    String
+  user_id    String @db.ObjectId
   client_name String
   description  String?
   total      Float
-  status      Status      @default(PENDING)
-  invoiceDate DateTime
+  status      String
+  invoiceDate String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -40,10 +40,11 @@ model Invoice {
 
 model Item {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  invoice_id String
+  invoice_id String @db.ObjectId
   name       String
   quantity   Int
   price      Float
+  total      Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
