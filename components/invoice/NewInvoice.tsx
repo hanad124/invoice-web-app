@@ -120,7 +120,7 @@ const NewInvoice = () => {
                 onSubmit={form.handleSubmit(onSubmitFunction)}
                 className="mt-2"
               >
-                <div className=" max-h-[20rem] overflow-y-scroll ">
+                <div className=" max-h-[20rem] overflow-y-scroll no-scrollbar">
                   <div className="">
                     <div className="flex gap-2">
                       <FormField
@@ -235,7 +235,7 @@ const NewInvoice = () => {
                   <ul>
                     {fields.map((field, index) => {
                       return (
-                        <div key={field.id} className="flex gap-2 mt-2">
+                        <div key={field.id} className="flex gap-2 my-2">
                           <FormField
                             control={form.control}
                             name={`items.${index}.name`}
@@ -375,29 +375,27 @@ const NewInvoice = () => {
                     <FiPlus className="w-4 h-4 mr-2" />
                     <span>Add Item</span>
                   </Button>
-                  <DialogFooter>
-                    <Button
-                      variant="default"
-                      color="primary"
-                      className={
-                        isPending
-                          ? "cursor-not-allowed bg-primary/60"
-                          : "cursor-pointer"
-                      }
-                      type="submit"
-                    >
-                      {isPending ? (
-                        <>
-                          <FiLoader className="animate-spin mr-2" />
-                          <span>Creating Invoice</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Create Invoice</span>
-                        </>
-                      )}
-                    </Button>
-                  </DialogFooter>
+                  <Button
+                    variant="default"
+                    color="primary"
+                    className={
+                      isPending
+                        ? "cursor-not-allowed bg-primary/60"
+                        : "cursor-pointer"
+                    }
+                    type="submit"
+                  >
+                    {isPending ? (
+                      <>
+                        <FiLoader className="animate-spin mr-2" />
+                        <span>Creating Invoice</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Create Invoice</span>
+                      </>
+                    )}
+                  </Button>
                 </div>
               </form>
             </Form>
