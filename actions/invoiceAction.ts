@@ -64,7 +64,6 @@ export const createInvoice = async (values: z.infer<typeof invoiceSchema>) => {
   }
 };
 
-// get personaliesed invoices
 export const getInvoices = async () => {
   try {
     const currentUser = await getCurrentUser();
@@ -86,6 +85,33 @@ export const getInvoices = async () => {
     }
 
     return { success: invoices };
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// delete invoice
+export const deleteInvoice = async (id: string) => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      return { error: "no user found" };
+    }
+
+    const invoice = await prisma.invoice.delete({
+      where: {
+        id,
+      },
+    });
+
+    if (!invoice) {
+      return { error: "invoice not found" };
+    }
+
+    await getInvoices();
+    revalidatePath("/dashboard/invoices");
+    revalidateTag("invoices");
+    return { success: "invoice deleted successfully" };
   } catch (error) {
     console.error(error);
   }
