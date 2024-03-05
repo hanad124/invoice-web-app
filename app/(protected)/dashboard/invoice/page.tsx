@@ -5,6 +5,7 @@ import NewInvoice from "@/components/invoice/NewInvoice";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { FiPlus } from "react-icons/fi";
+import toast, { Toaster } from "react-hot-toast";
 import { openNewInvoiceModal } from "@/store/model";
 
 const page = () => {
@@ -30,6 +31,7 @@ const page = () => {
       <NewInvoice />
 
       <Invoice />
+      <Toaster />
     </div>
   );
 };

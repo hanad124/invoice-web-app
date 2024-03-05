@@ -11,6 +11,7 @@ export const createInvoice = async (values: z.infer<typeof invoiceSchema>) => {
   try {
     const currentUser = await getCurrentUser();
     const validateFields = invoiceSchema.safeParse(values);
+    // console.log(validateFields);
     if (!validateFields.success) {
       return { error: "invalid fields" };
     }
@@ -21,6 +22,18 @@ export const createInvoice = async (values: z.infer<typeof invoiceSchema>) => {
 
     const { client_name, total, status, invoiceDate, items, description } =
       validateFields.data;
+
+    // check if the any of the items is not valid or empty
+    if (
+      items?.some((item) => !item.name || !item.quantity || !item.price) ||
+      client_name === "" ||
+      total === 0 ||
+      invoiceDate === "" ||
+      description === ""
+    ) {
+      console.log("invalid item fields");
+      return { error: "invalid fields, please fill empty fields" };
+    }
 
     const invoice = await prisma.invoice.create({
       data: {

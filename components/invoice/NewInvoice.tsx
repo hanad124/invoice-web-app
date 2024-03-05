@@ -19,7 +19,8 @@ import { useEffect, useState, useTransition } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FiTrash, FiPlus } from "react-icons/fi";
+import { FiTrash, FiPlus, FiLoader } from "react-icons/fi";
+import toast, { Toaster } from "react-hot-toast";
 
 import {
   Form,
@@ -54,7 +55,7 @@ const NewInvoice = () => {
 
   const { control } = form;
 
-  const { id, fields, append, remove, replace } = useFieldArray({
+  const { fields, append, remove, replace } = useFieldArray({
     name: "items",
     control,
   });
@@ -73,25 +74,31 @@ const NewInvoice = () => {
   };
 
   const onSubmitFunction = async (values: z.infer<typeof invoiceSchema>) => {
-    console.log(values);
-
-    // only submit the items that thier values are not empty
-    const newItems = values.items?.filter((item) => {
-      return item.name !== "" && item.quantity !== 0 && item.price !== 0;
-    });
-
-    values.items = newItems;
-
-    console.log("newItems", newItems);
-
     startTransition(() => {
-      createInvoice(values);
+      const newItems = values.items?.filter((item) => {
+        if (item.name === "" || item.quantity === 0 || item.price === 0) {
+          return false;
+        }
+        return true;
+      });
+
+      values.items = newItems;
+      createInvoice(values).then((data) => {
+        if (data?.error) {
+          console.log(data?.error);
+          toast.error(data?.error);
+          // form.reset();
+        }
+
+        if (data?.success) {
+          console.log(data?.success);
+          toast.success(data?.success);
+          form.reset();
+          setOpen(false);
+        }
+      });
     });
   };
-
-  const formValue = form?.getValues();
-
-  console.log("form", formValue);
 
   return (
     <div>
@@ -167,13 +174,14 @@ const NewInvoice = () => {
                           <FormItem>
                             <FormLabel htmlFor="status">Status</FormLabel>
                             <FormControl>
-                              <Input
-                                type="text"
-                                id="status"
-                                placeholder="Status"
-                                className="shadow-none"
+                              {/* make it select tag */}
+                              <select
+                                className="w-full border-none shadow-none"
                                 {...field}
-                              />
+                              >
+                                <option value="pending">Pending</option>
+                                <option value="paid">Paid</option>
+                              </select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -334,19 +342,6 @@ const NewInvoice = () => {
                                     {...field}
                                     onChange={(e) => {
                                       const value = Number(e.target.value);
-                                      // const subtotal = form.watch(
-                                      //   `items.${index}.total`
-                                      // );
-
-                                      // let total = form.getValues("total");
-
-                                      // const newTotal = (total += subtotal);
-
-                                      // form.setValue("total", newTotal, {
-                                      //   shouldValidate: true,
-                                      // });
-
-                                      // console.log("newTotal", newTotal);
                                       field.onChange(value);
                                     }}
                                   />
@@ -373,7 +368,6 @@ const NewInvoice = () => {
                     variant="default"
                     color="primary"
                     type="button"
-                    className=""
                     onClick={() =>
                       append({ name: "", quantity: 0, price: 0, total: 0 })
                     }
@@ -382,8 +376,26 @@ const NewInvoice = () => {
                     <span>Add Item</span>
                   </Button>
                   <DialogFooter>
-                    <Button variant="default" color="primary" type="submit">
-                      Create Invoice
+                    <Button
+                      variant="default"
+                      color="primary"
+                      className={
+                        isPending
+                          ? "cursor-not-allowed bg-primary/60"
+                          : "cursor-pointer"
+                      }
+                      type="submit"
+                    >
+                      {isPending ? (
+                        <>
+                          <FiLoader className="animate-spin mr-2" />
+                          <span>Creating Invoice</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Create Invoice</span>
+                        </>
+                      )}
                     </Button>
                   </DialogFooter>
                 </div>
