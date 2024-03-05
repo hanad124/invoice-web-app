@@ -72,9 +72,11 @@ const DataTable = <TData, TValue>({
         <div className="flex items-center py-4">
           <Input
             placeholder="Search by name..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn("client_name")?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
+              table.getColumn("client_name")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />

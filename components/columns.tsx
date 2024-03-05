@@ -24,7 +24,7 @@ export type User = {
 
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "client_name",
     header: ({ column }) => {
       return (
         <Button
@@ -38,17 +38,17 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "description",
+    header: "Description",
   },
   {
-    accessorKey: "lastSeen",
-    header: "Last seen",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("lastSeen"));
-      const formatted = date.toLocaleDateString();
-      return <div className="font-medium">{formatted}</div>;
-    },
+    accessorKey: "total",
+    header: "Total",
+    // cell: ({ row }) => {
+    //   const date = new Date(row.getValue("lastSeen"));
+    //   const formatted = date.toLocaleDateString();
+    //   return <div className="font-medium">{formatted}</div>;
+    // },
   },
   {
     id: "actions",

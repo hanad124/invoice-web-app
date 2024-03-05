@@ -6,6 +6,7 @@ import prisma from "@/prisma";
 import { invoiceSchema } from "@/schemas/invoice";
 import { getCurrentUser } from "./userActions";
 import { z } from "zod";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const createInvoice = async (values: z.infer<typeof invoiceSchema>) => {
   try {
@@ -54,7 +55,37 @@ export const createInvoice = async (values: z.infer<typeof invoiceSchema>) => {
     }
 
     console.log(invoice);
+    await getInvoices();
+    revalidatePath("/dashboard/invoices");
+    revalidateTag("invoices");
     return { success: "invoice created successfully" };
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// get personaliesed invoices
+export const getInvoices = async () => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      return { error: "no user found" };
+    }
+
+    const invoices = await prisma.invoice.findMany({
+      where: {
+        user_id: currentUser?.user?.id,
+      },
+      include: {
+        items: true,
+      },
+    });
+
+    if (!invoices) {
+      return { error: "no invoices found" };
+    }
+
+    return { success: invoices };
   } catch (error) {
     console.error(error);
   }

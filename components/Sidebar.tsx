@@ -60,7 +60,7 @@ const Sidebar = () => {
               <span className="text-[#061C3D] font-medium">InvoiceFy</span>
             </span>
           </div>
-          <ul className="menu   h-full overflow-y-scroll pb-28">
+          <ul className="menu   h-full overflow-y-scroll no-scrollbar pb-28">
             {menuItems.map((item, index) => {
               const isActive = pathname === item.url;
 
