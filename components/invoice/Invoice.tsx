@@ -72,7 +72,7 @@ const Invoice = () => {
 
   const actions = {
     id: "actions",
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const invoice = row.original;
 
       return (
