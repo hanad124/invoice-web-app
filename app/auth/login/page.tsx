@@ -91,7 +91,7 @@ rgba(0, 0, 0, 0.06) 0px 0px 0px 1px`,
         </div>
 
         <h2 className=" text-base	 text-left mt-[2rem]  text-[1.2rem] font-normal text-[#5d596c]">
-          Welcome to Invoicefy! 👋
+          Welcome to Invoicefy 👋
         </h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmitFunction)} className="mt-5">
