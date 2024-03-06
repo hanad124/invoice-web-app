@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { openNewInvoiceModal } from "@/store/model";
 import { invoiceSchema } from "@/schemas/invoice";
-import { createInvoice } from "@/actions/invoiceAction";
+import { createInvoice, getInvoices } from "@/actions/invoiceAction";
 import { useEffect, useState, useTransition } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
@@ -92,6 +92,7 @@ const AddInvoiceModel = () => {
         if (data?.success) {
           console.log(data?.success);
           toast.success(data?.success);
+          getInvoices();
 
           form.reset();
           setOpen(false);

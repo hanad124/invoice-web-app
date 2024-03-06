@@ -41,26 +41,23 @@ type InvoiceType = {
 const Invoice = () => {
   const [data, setData] = useState<InvoiceType[] | null>(null);
 
-  const { setOpen } = openEditInvoiceModal();
+  const { setOpen, open } = openEditInvoiceModal();
   const { setId } = invoiceId();
 
+  const fetchInvoices = async () => {
+    try {
+      const response = await getInvoices();
+      setData(response?.success);
+    } catch (error) {
+      console.error("Error fetching invoices:", error);
+      setData([]); // Set data to empty array if there's an error
+    }
+  };
   useEffect(() => {
-    const fetchInvoices = async () => {
-      try {
-        const response = await getInvoices();
-        setData(response?.success);
-      } catch (error) {
-        console.error("Error fetching invoices:", error);
-        setData([]); // Set data to empty array if there's an error
-      }
-    };
-
     fetchInvoices();
 
     return () => {};
-  }, []);
-
-  console.log(data);
+  }, [open == false]);
 
   const deleteInvoiceHandler = async (id: string) => {
     const confirm = window.confirm("Are you sure you want to delete?");
@@ -91,9 +88,10 @@ const Invoice = () => {
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => {
+                onClick={async () => {
                   setOpen(true);
                   setId(invoice.id);
+                  await fetchInvoices();
                 }}
               >
                 <span className="text-md slate-600">Edit</span>
@@ -104,8 +102,9 @@ const Invoice = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={() => {
+                onClick={async () => {
                   deleteInvoiceHandler(invoice.id);
+                  await fetchInvoices();
                 }}
               >
                 <span className="text-md slate-600">Delete</span>

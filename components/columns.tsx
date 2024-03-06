@@ -67,6 +67,10 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "total",
     header: "Total",
+    cell: ({ row }) => {
+      const total = row.getValue("total");
+      return <div className="">${total}</div>;
+    },
   },
   // date
   {
@@ -75,7 +79,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue("invoiceDate"));
       const formatted = date.toLocaleDateString();
-      return <div className="font-medium">{formatted}</div>;
+      return <div className="">{formatted}</div>;
     },
   },
   {

@@ -56,8 +56,8 @@ export const createInvoice = async (values: z.infer<typeof invoiceSchema>) => {
 
     console.log(invoice);
     await getInvoices();
-    revalidatePath("/dashboard/invoices");
-    revalidateTag("invoices");
+    revalidatePath("/dashboard/invoice");
+    revalidateTag("invoice");
     return { success: "invoice created successfully" };
   } catch (error) {
     console.error(error);
@@ -134,8 +134,8 @@ export const deleteInvoice = async (id: string) => {
     }
 
     await getInvoices();
-    revalidatePath("/dashboard/invoices");
-    revalidateTag("invoices");
+    revalidatePath("/dashboard/invoice");
+    revalidateTag("Invoice");
     return { success: "invoice deleted successfully" };
   } catch (error) {
     console.error(error);
@@ -196,8 +196,8 @@ export const updateInvoice = async (
     }
 
     await getInvoices();
-    revalidatePath("/dashboard/invoices");
-    revalidateTag("invoices");
+    revalidatePath("/dashboard/invoice");
+    revalidateTag("Invoice");
     return { success: "invoice updated successfully" };
   } catch (error) {
     console.error(error);

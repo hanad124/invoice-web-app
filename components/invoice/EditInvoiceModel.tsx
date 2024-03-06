@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { openEditInvoiceModal } from "@/store/EditInvoice";
 import { invoiceId } from "@/store/EditInvoice";
 import { invoiceSchema } from "@/schemas/invoice";
-import { createInvoice } from "@/actions/invoiceAction";
+import { createInvoice, getInvoices } from "@/actions/invoiceAction";
 import { useEffect, useState, useTransition } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
@@ -124,6 +124,8 @@ const EditInvoiceModel = () => {
         }
       });
     });
+    const res = await getInvoices();
+    console.log(res?.success);
   };
 
   return (
@@ -139,7 +141,7 @@ const EditInvoiceModel = () => {
         }}
       >
         <DialogContent className="sm:max-w-fit">
-          <h1 className="font-semibold text-lg">Create New Invoice </h1>
+          <h1 className="font-semibold text-lg">Edit Invoice </h1>
           <div className="py-2">
             <Form {...form}>
               <form
@@ -425,11 +427,11 @@ const EditInvoiceModel = () => {
                       {isPending ? (
                         <>
                           <FiLoader className="animate-spin mr-2" />
-                          <span>Creating Invoice</span>
+                          <span>Updating Invoice</span>
                         </>
                       ) : (
                         <>
-                          <span>Create Invoice</span>
+                          <span>Update Invoice</span>
                         </>
                       )}
                     </Button>
