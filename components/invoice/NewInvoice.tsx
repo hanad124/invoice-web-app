@@ -4,7 +4,7 @@ import React from "react";
 import { openNewInvoiceModal } from "@/store/model";
 import { Button } from "../ui/button";
 import { FiPlus } from "react-icons/fi";
-import NewInvoiceModel from "./NewInvoiceModel";
+import AddInvoiceModel from "./AddInvoiceModel";
 
 const NewInvoice = () => {
   const { setOpen } = openNewInvoiceModal();
@@ -26,7 +26,7 @@ const NewInvoice = () => {
           <span>New Invoice</span>
         </Button>
       </div>
-      <NewInvoiceModel />
+      <AddInvoiceModel />
     </div>
   );
 };

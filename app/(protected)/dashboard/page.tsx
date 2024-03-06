@@ -6,7 +6,7 @@ const page = async () => {
 
   return (
     <div>
-      Dashboard Page
+      <h1>{JSON.stringify(session)}</h1>
       <form
         action={async () => {
           "use server";

@@ -17,6 +17,7 @@ import {
   HiOutlineUserCircle,
   HiDocumentReport,
 } from "react-icons/hi";
+import { FiSettings } from "react-icons/fi";
 
 export const menuItems = [
   {
@@ -30,6 +31,12 @@ export const menuItems = [
     icon: HiDocumentReport,
     text: "Invoice",
     url: "/dashboard/invoice",
+    submenus: [],
+  },
+  {
+    icon: FiSettings,
+    text: "Settings",
+    url: "/dashboard/settings",
     submenus: [],
   },
 ];

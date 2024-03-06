@@ -14,6 +14,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { openEditInvoiceModal } from "@/store/EditInvoice";
 
 import {
   Table,
@@ -33,6 +34,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import EditInvoiceModel from "./EditInvoiceModel";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -46,6 +48,8 @@ const DataTable = <TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  const { setOpen } = openEditInvoiceModal();
 
   const table = useReactTable({
     data,
@@ -132,7 +136,7 @@ const DataTable = <TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="cursor-pointer">
             {table?.getRowModel().rows?.length ? (
               table?.getRowModel().rows.map((row) => {
                 return (
@@ -185,6 +189,7 @@ const DataTable = <TData, TValue>({
           Next
         </Button>
       </div>
+      <EditInvoiceModel />
     </>
   );
 };

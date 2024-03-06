@@ -12,7 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { openNewInvoiceModal } from "@/store/model";
+import { openEditInvoiceModal } from "@/store/EditInvoice";
+import { invoiceId } from "@/store/EditInvoice";
 import { invoiceSchema } from "@/schemas/invoice";
 import { createInvoice } from "@/actions/invoiceAction";
 import { useEffect, useState, useTransition } from "react";
@@ -21,6 +22,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FiTrash, FiPlus, FiLoader } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
+import { getInvoiceById, updateInvoice } from "@/actions/invoiceAction";
 
 import {
   Form,
@@ -30,9 +32,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-const NewInvoiceModel = () => {
-  const { setOpen, open } = openNewInvoiceModal();
+const EditInvoiceModel = () => {
+  const { setOpen, open } = openEditInvoiceModal();
+  const { id } = invoiceId();
   const [isPending, startTransition] = useTransition();
+  // const [invoice, setInvoice] = useState<z.infer<typeof invoiceSchema> | null>(
+  //   null
+  // );
 
   const form = useForm<z.infer<typeof invoiceSchema>>({
     resolver: zodResolver(invoiceSchema),
@@ -52,6 +58,26 @@ const NewInvoiceModel = () => {
       ],
     },
   });
+
+  const featchInvoice = async () => {
+    const response = await getInvoiceById(id);
+
+    form.setValue("client_name", response?.success?.client_name);
+    form.setValue("status", response?.success?.status);
+    form.setValue("invoiceDate", response?.success?.invoiceDate);
+    form.setValue("description", response?.success?.description);
+    form.setValue("total", response?.success?.total);
+
+    // set the items
+    form.setValue("items", response?.success?.items);
+  };
+
+  useEffect(() => {
+    featchInvoice();
+
+    return () => {};
+  }, [id]);
+  // console.log(invoice);
 
   const { control } = form;
 
@@ -83,7 +109,7 @@ const NewInvoiceModel = () => {
       });
 
       values.items = newItems;
-      createInvoice(values).then((data) => {
+      updateInvoice(id, values).then((data) => {
         if (data?.error) {
           console.log(data?.error);
           toast.error(data?.error);
@@ -418,4 +444,4 @@ const NewInvoiceModel = () => {
   );
 };
 
-export default NewInvoiceModel;
+export default EditInvoiceModel;

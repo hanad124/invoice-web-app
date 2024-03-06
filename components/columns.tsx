@@ -67,11 +67,6 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "total",
     header: "Total",
-    // cell: ({ row }) => {
-    //   const date = new Date(row.getValue("lastSeen"));
-    //   const formatted = date.toLocaleDateString();
-    //   return <div className="font-medium">{formatted}</div>;
-    // },
   },
   // date
   {
@@ -86,45 +81,20 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "status",
     header: "Status",
-  },
-  {
-    id: "actions",
     cell: ({ row }) => {
-      const invoice = row.original;
-
+      const status = row.getValue("status");
       return (
-        <>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => navigator.clipboard.writeText(invoice.id)}
-              >
-                <span className="text-md slate-600">Edit</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <span className="text-md slate-600">View invoice</span>
-              </DropdownMenuItem>{" "}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => {
-                  deleteInvoiceHandler(invoice.id);
-                }}
-              >
-                <span className="text-md slate-600">Delete</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Toaster />
-        </>
+        <div
+          className={`px-6 py-[7px] max-w-fit rounded-lg text-sm font-medium ${
+            status === "paid"
+              ? "bg-green-600/10 border-green-600 text-green-600"
+              : status === "pending"
+              ? "bg-yellow-600/10 border-yellow-600 text-yellow-600"
+              : "bg-red-600/10 border-red-600 text-red-600"
+          }`}
+        >
+          {status}
+        </div>
       );
     },
   },
