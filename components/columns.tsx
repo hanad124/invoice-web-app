@@ -16,24 +16,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import getShortId from "@/helpers/getShortId";
+import React from "react";
 
 export type User = {
   id: string;
-  name: string;
-  emaiL: string;
-  image: string;
-  lastSeen: string;
-};
-
-const deleteInvoiceHandler = async (id: string) => {
-  const confirm = window.confirm("Are you sure you want to delete?");
-  if (!confirm) return;
-
-  toast.promise(deleteInvoice(id), {
-    loading: "Deleting invoice...",
-    success: "Invoice deleted successfully",
-    error: "Error deleting invoice",
-  });
+  client_name: string;
+  description: string;
+  total: number;
+  invoiceDate: string;
+  status: string | React.ReactNode | "paid" | "pending";
 };
 
 export const columns: ColumnDef<User>[] = [
@@ -69,7 +60,7 @@ export const columns: ColumnDef<User>[] = [
     header: "Total",
     cell: ({ row }) => {
       const total = row.getValue("total");
-      return <div className="">${total}</div>;
+      return <div className="">{total === 0 ? "Unknown" : `$${total}`}</div>;
     },
   },
   // date
@@ -86,7 +77,7 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status");
+      const status = row.getValue("status") as React.ReactNode;
       return (
         <div
           className={`px-6 py-[7px] max-w-fit rounded-lg text-sm font-medium ${
