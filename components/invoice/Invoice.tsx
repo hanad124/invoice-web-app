@@ -57,7 +57,7 @@ const Invoice = () => {
     fetchInvoices();
 
     return () => {};
-  }, [open == false]);
+  }, [open == false, fetchInvoices]);
 
   const deleteInvoiceHandler = async (id: string) => {
     const confirm = window.confirm("Are you sure you want to delete?");

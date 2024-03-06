@@ -76,7 +76,7 @@ const EditInvoiceModel = () => {
     featchInvoice();
 
     return () => {};
-  }, [id]);
+  }, [id, featchInvoice]);
   // console.log(invoice);
 
   const { control } = form;

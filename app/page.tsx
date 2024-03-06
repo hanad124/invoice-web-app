@@ -8,6 +8,6 @@ export default function Home() {
   // automatically redirect to the dashboard page
   useEffect(() => {
     router.push("/dashboard");
-  }, []);
+  });
   return <div className=""></div>;
 }
